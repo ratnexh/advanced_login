@@ -1,0 +1,4 @@
+system.advanced_login_setting:
+  title: 'Advanced Login'
+  parent: system.admin_config
+  route_name: advanced_login.advanced_login_config_form

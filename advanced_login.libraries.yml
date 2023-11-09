@@ -1,0 +1,10 @@
+advanced_login:
+  css:
+    theme:
+      css/al.config.css: {}
+  js:
+    js/al.config.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

@@ -1,0 +1,5 @@
+name: 'Advanced Drupal Login'
+description: 'Module to enhance default Drupal login'
+type: module
+package: custom
+core_version_requirement: ^9 || ^10

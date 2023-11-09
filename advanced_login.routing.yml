@@ -1,0 +1,23 @@
+advanced_login.advanced_login_config_form:
+  path: 'admin/config/advanced/login/settings'
+  defaults:
+    _title: 'Advanced login config'
+    _form: 'Drupal\advanced_login\Form\advancedLoginConfigForm'
+  requirements:
+    _permission: 'access content'
+
+advanced_login.login:
+  path: '/user/google-login/callback'
+  defaults:
+    _controller: '\Drupal\advanced_login\Controller\advancedLoginController::login'
+    _title: 'Google Login'
+  requirements:
+    _permission: 'access content'
+
+advanced_login.advanced_login_oauth_callback:
+  path: '/user/google-oauth'
+  defaults:
+    _controller: '\Drupal\advanced_login\Controller\advancedLoginController::advanced_login_oauth_callback'
+    _title: 'Google Auth'
+  requirements:
+    _permission: 'access content'

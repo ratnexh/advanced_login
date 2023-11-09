@@ -1,0 +1,37 @@
+[type="color"],
+[type="date"],
+[type="datetime-local"],
+[type="email"],
+[type="file"],
+[type="month"],
+[type="number"],
+[type="password"],
+[type="search"],
+[type="tel"],
+[type="text"],
+[type="time"],
+[type="url"],
+[type="week"],
+textarea {
+    width: 100% !important;
+}
+
+#advanced-login-config-form {
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #00000014;
+    border-radius: 5px;
+    background-color: #f3f4f9;
+}
+
+#user-login-form {
+    max-width: 65%;
+}
+
+#edit-change-login-btn-color,
+#edit-change-login-btn-text-color,
+#edit-change-login-ggl-btn-text-color,
+#edit-change-login-ggl-btn-color {
+    max-width: 40px;
+    max-height: 40px;
+}

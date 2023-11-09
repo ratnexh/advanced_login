@@ -1,0 +1,85 @@
+<?php
+    use Drupal\Core\Url;
+    
+    function advanced_login_page_attachments(array &$attachments) {
+        $attachments['#attached']['library'][] = 'advanced_login/advanced_login';
+    }
+
+    function advanced_login_preprocess_page(&$variables) {
+        $glcf = \Drupal::config('advanced_login_config_form.setting');
+        $variables['client_id'] = $glcf->get('client_id');
+        $variables['client_secret'] = $glcf->get('client_secret');
+        $variables['redirect_uri'] = $glcf->get('redirect_uri');
+    }    
+    
+    function advanced_login_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+        $config = \Drupal::config('advanced_login_config_form.setting');
+
+        if ($form_id == 'user_login_form') {
+            if($config->get('show_users')){
+                $users = \Drupal::entityTypeManager()->getStorage('user')->loadMultiple();
+            
+                $user_list = [];
+                $user_status = [];
+                foreach ($users as $user) {
+                    if($user->isAnonymous()){
+                        continue;
+                    }
+                    $user_list[] = $user->name->value;
+                    $user_status[] = $user->status->value;
+                }
+
+                $form['user_info'] = [
+                    '#type' => 'details',
+                    '#title' => t('Existing Users with status'),
+                    '#open' => false,
+                    '#prefix' => '<div class="js-form-item form-item">',
+                    '#suffix' => '</div>',
+                    'table' => [
+                        '#type' => 'table',
+                        '#header' => [t('Username'), t('Status')],
+                        '#rows' => array_map(function($name, $status) {
+                            return [$name, $status ? t('Active') : t('Blocked')];
+                        }, $user_list, $user_status),
+                        '#empty' => t('No users found.'),
+                    ],
+                ];
+            }
+
+            $loginBtnText = $config->get('change_login_btn_text');
+            $loginBtnTextColor = $config->get('change_login_btn_text_color');
+            $loginBtnBgColor = $config->get('change_login_btn_color');
+            $form['actions']['submit']['#attributes'] = [
+                'class' => ['button--primary'],
+                'style' => [
+                    'background-color:' . $loginBtnBgColor.';',
+                    'color:' . $loginBtnTextColor.';',
+                ],
+                'value' =>[ $loginBtnText ],
+            ]; 
+
+            if($config->get('show_login_with_google_btn')){   
+                $loginBtnText = $config->get('change_login_ggl_btn_text');
+                $loginBtnTextColor = $config->get('change_login_ggl_btn_text_color');
+                $loginBtnBgColor = $config->get('change_login_ggl_btn_color');
+                $form['actions']['advanced_login'] = [
+                    '#type' => 'link',
+                    '#title' => $loginBtnText,
+                    '#url' => Url::fromUri('internal:/advanced_login/login'),
+                    '#attributes' => [  
+                        'class' => [
+                            'button',
+                            'js-form-submit',
+                            'form-submit',
+                        ],
+                        'style' =>[
+                            'background-color:'.$loginBtnBgColor.';',
+                            'color:'.$loginBtnTextColor.';',
+                        ],
+                    ],
+                ];
+            }
+        }
+    }
+
+?>
