@@ -1,16 +1,20 @@
 <?php
     use Drupal\Core\Url;
     
-    function advanced_login_page_attachments(array &$attachments) {
-        $attachments['#attached']['library'][] = 'advanced_login/advanced_login';
-    }
+function advanced_login_page_attachments(array &$attachments) {
+    // Add library for advanced login
+    $attachments['#attached']['library'][] = 'advanced_login/advanced_login';
+}
 
-    function advanced_login_preprocess_page(&$variables) {
-        $glcf = \Drupal::config('advanced_login_config_form.setting');
-        $variables['client_id'] = $glcf->get('client_id');
-        $variables['client_secret'] = $glcf->get('client_secret');
-        $variables['redirect_uri'] = $glcf->get('redirect_uri');
-    }    
+function advanced_login_preprocess_page(&$variables) {
+    // Retrieve advanced login configuration
+    $glcf = \Drupal::config('advanced_login_config_form.setting');
+
+    // Set variables for advanced login page
+    $variables['client_id'] = $glcf->get('client_id');
+    $variables['client_secret'] = $glcf->get('client_secret');
+    $variables['redirect_uri'] = $glcf->get('redirect_uri');
+}   
     
     function advanced_login_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
         $config = \Drupal::config('advanced_login_config_form.setting');
@@ -51,10 +55,10 @@
             $loginBtnBgColor = $config->get('change_login_btn_color');
             $form['actions']['submit']['#attributes'] = [
                 'class' => ['button--primary'],
-                'style' => [
+                'style' => $config->get('check_to_apply_color') ? [
                     'background-color:' . $loginBtnBgColor.';',
                     'color:' . $loginBtnTextColor.';',
-                ],
+                ] : [],
                 'value' =>[ $loginBtnText ],
             ]; 
 
@@ -72,10 +76,10 @@
                             'js-form-submit',
                             'form-submit',
                         ],
-                        'style' =>[
+                        'style' =>$config->get('check_to_apply') ? [
                             'background-color:'.$loginBtnBgColor.';',
                             'color:'.$loginBtnTextColor.';',
-                        ],
+                        ] : [],
                     ],
                 ];
             }

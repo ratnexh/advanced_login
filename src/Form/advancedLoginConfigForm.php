@@ -40,6 +40,11 @@ class advancedLoginConfigForm extends ConfigFormBase{
                     '#title' => "Change text",
                     '#default_value' => $config->get('change_login_btn_text'),
                 ],
+                'check_to_apply_color'=>[
+                    '#type'=>'checkbox',
+                    '#title' =>$this->t("Check this to apply below changes."),
+                    '#default_value' => $config->get('check_to_apply_color'),
+                ],
                 'change_login_btn_text_color'=>[
                     '#type' => 'color',
                     '#title' => "Change text color",
@@ -59,6 +64,11 @@ class advancedLoginConfigForm extends ConfigFormBase{
                     '#type' => 'textfield',
                     '#title' => "Change text",
                     '#default_value' => $config->get('change_login_ggl_btn_text'),
+                ],
+                'check_to_apply'=>[
+                    '#type'=>'checkbox',
+                    '#title' =>$this->t("Check this to apply below changes."),
+                    '#default_value' => $config->get('check_to_apply'),
                 ],
                 'change_login_ggl_btn_text_color'=>[
                     '#type' => 'color',
@@ -104,9 +114,11 @@ class advancedLoginConfigForm extends ConfigFormBase{
         ->set('show_users', $form_state->getValue('show_users'))
         ->set('show_login_with_google_btn', $form_state->getValue('show_login_with_google_btn'))
         ->set('change_login_btn_text', $form_state->getValue('change_login_btn_text'))
+        ->set('check_to_apply_color', $form_state->getValue('check_to_apply_color'))
         ->set('change_login_btn_text_color', $form_state->getValue('change_login_btn_text_color'))
         ->set('change_login_btn_color', $form_state->getValue('change_login_btn_color'))
         ->set('change_login_ggl_btn_text', $form_state->getValue('change_login_ggl_btn_text'))
+        ->set('check_to_apply', $form_state->getValue('check_to_apply'))
         ->set('change_login_ggl_btn_text_color', $form_state->getValue('change_login_ggl_btn_text_color'))
         ->set('change_login_ggl_btn_color', $form_state->getValue('change_login_ggl_btn_color'))
         ->save();

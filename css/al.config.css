@@ -35,3 +35,7 @@ textarea {
     max-width: 40px;
     max-height: 40px;
 }
+
+details details summary {
+    background-color: #f3f4f9 !important;
+}
